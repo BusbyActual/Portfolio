@@ -657,8 +657,8 @@ footer {
 .project-info {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    margin-left: 300px;
+    transform: translateY(-30%);
+    margin-left: 200px;
     padding: 15px;
 
     h3 {
@@ -1000,8 +1000,9 @@ footer {
 
 }
 
-/*  Fix lists */
+//  Fix lists
 
 ul-c: {
   list-style-type: circle;
 }
+
