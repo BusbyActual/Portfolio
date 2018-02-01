@@ -656,7 +656,7 @@ footer {
 
 .project-info {
     position: absolute;
-    top: 50%;
+    top: 30%;
     transform: translateY(-30%);
     margin-left: 200px;
     padding: 15px;
@@ -687,6 +687,11 @@ footer {
 #more-projects {
     display: none;
 }
+
+.ul-c: {
+  list-style-type: circle;
+}
+
 
 /*
     -------------------------------
@@ -999,10 +1004,3 @@ footer {
     }
 
 }
-
-//  Fix lists
-
-ul-c: {
-  list-style-type: circle;
-}
-
