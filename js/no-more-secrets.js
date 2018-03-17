@@ -2,12 +2,7 @@
     This is ported and rewritten from a nodefile to JS
 */
 
-process.stdin.resume();
-process.stdin.setEncoding("utf8");
-process.stdin.on("data", function(data){
-    processInput(data);
-});
-
+(function($) {
 let maskChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()-_=+{}[]:;|\"'<>,.?/".split("");
 
 class ModChar {
@@ -87,7 +82,7 @@ class DataProcessor {
 }
 
 
-let processInput = (data) => {
+let processInput = (data, selector) => {
     const dataProcessor = new DataProcessor();
     console.log(dataProcessor.getCryptedText(data));
 
@@ -98,6 +93,7 @@ let processInput = (data) => {
         console.log('\033['+l+'A');
         // process.stdout.clearScreenDown();
         console.log(value);
+        $(selector).text(value);
 
         if(done){
             clearInterval(interval);
@@ -109,3 +105,7 @@ let processInput = (data) => {
     dataProcessor.initDecrypt();
 };
 
+let temp = $('#lead-content').text();
+console.log(temp)
+// console.log(processInput(temp, '#lead-content'))
+})(jQuery);
