@@ -18,12 +18,24 @@ class ModChar {
     initDecrypt(){
         const gen = this.decrypt();
         return new Promise((resolve)=>{
-            setInterval(()=>{
+            let speed = 100;
+
+            let werk = () => {
                 const {done} = gen.next();
+
                 if(done) {
                     resolve();
                 }
-            }, 100)
+
+                myFunction();
+            };
+
+             var myFunction = function() {
+                speed += 12;
+                setTimeout(werk, speed);
+            }
+
+            myFunction();
         });
     }
     getValue(){
@@ -44,6 +56,7 @@ class DataProcessor {
         this.chars = null;//It supposed to contain all chars
         this.rows = [];//It has all rows with text
         this.decrypted = false;
+        this.speed = 0;
     }
     getTextFromCryptedChars(chars){
         return [].concat.apply([], chars).reduce((res, char)=>{
@@ -98,7 +111,7 @@ let processInput = (data, selector) => {
             console.log('fin')
         }
 
-    }, 10);
+    }, 5);
 
     dataProcessor.initDecrypt();
 };
