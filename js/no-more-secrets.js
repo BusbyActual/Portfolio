@@ -31,7 +31,7 @@ class ModChar {
             };
 
              var myFunction = function() {
-                speed += 12;
+                speed += 7.5;
                 setTimeout(werk, speed);
             }
 
