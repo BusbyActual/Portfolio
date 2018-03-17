@@ -10,7 +10,7 @@ process.stdin.on("data", function(data){
 
 let maskChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()-_=+{}[]:;|\"'<>,.?/".split("");
 
-class Char {
+class ModChar {
     constructor(initial, animationInterval){
         this.initial = initial;
         this.decrypted = false;
@@ -18,7 +18,7 @@ class Char {
         this.crypted = this.generateCrypted();
     }
     generateCrypted(){
-        return Char.doNotModifyChars.includes(this.initial) ? this.initial : maskChars[Math.floor(Math.random()*maskChars.length)]
+        return ModChar.doNotModifyChars.includes(this.initial) ? this.initial : maskChars[Math.floor(Math.random()*maskChars.length)]
     }
     initDecrypt(){
         const gen = this.decrypt();
@@ -42,7 +42,7 @@ class Char {
         yield this.initial;
     }
 }
-Char.doNotModifyChars = ["\n"," "];
+ModChar.doNotModifyChars = ["\n"," "];
 
 class DataProcessor {
     constructor(){
@@ -59,9 +59,9 @@ class DataProcessor {
         this.rows = text.split("\n");
         this.chars = this.rows.reduce((res, row)=>{//[new Char, new Char, new Char,new Char, new Char, new Char...]
             row = row.split("").map((char)=>{
-                return new Char(char, (Math.random()*20|0));
+                return new ModChar(char, (Math.random()*20|0));
             });
-            row.unshift(new Char("\n"));
+            row.unshift(new ModChar("\n"));
             return [...res, ...row];
         }, []);
         return this.chars;
@@ -89,19 +89,19 @@ class DataProcessor {
 
 let processInput = (data) => {
     const dataProcessor = new DataProcessor();
-    process.stdout.write(dataProcessor.getCryptedText(data));
+    console.log(dataProcessor.getCryptedText(data));
 
     let interval = setInterval(()=>{
         const l = dataProcessor.rows.length;
         let {done, value} = dataProcessor.getSnapshot();
 
-        process.stdout.write('\033['+l+'A');
-        process.stdout.clearScreenDown();
-        process.stdout.write(value);
+        console.log('\033['+l+'A');
+        // process.stdout.clearScreenDown();
+        console.log(value);
 
         if(done){
             clearInterval(interval);
-            process.exit();
+            console.log('fin')
         }
 
     }, 75);
