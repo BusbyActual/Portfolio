@@ -23,7 +23,7 @@ class ModChar {
                 if(done) {
                     resolve();
                 }
-            }, 300)
+            }, 100)
         });
     }
     getValue(){
@@ -90,9 +90,7 @@ let processInput = (data, selector) => {
         const l = dataProcessor.rows.length;
         let {done, value} = dataProcessor.getSnapshot();
 
-        console.log('\033['+l+'A');
-        // process.stdout.clearScreenDown();
-        console.log(value);
+
         $(selector).text(value);
 
         if(done){
@@ -100,12 +98,13 @@ let processInput = (data, selector) => {
             console.log('fin')
         }
 
-    }, 75);
+    }, 10);
 
     dataProcessor.initDecrypt();
 };
 
-let temp = $('#lead-content').text();
+let temp = $('.crypto').each(function(){ processInput($(this).text(), this); });
+
 console.log(temp)
-// console.log(processInput(temp, '#lead-content'))
+// console.log(processInput(temp, '.crypto'))
 })(jQuery);
