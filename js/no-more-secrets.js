@@ -42,11 +42,11 @@ class ModChar {
             myFunction();
         });
     }
-    getValue() {
+    getValue(){
         return this.decrypted ? this.initial : this.crypted;
     }
-    * decrypt() {
-        for (let i=0; i < this.animationInterval; i++) {
+    * decrypt(){
+        for (let i=0;i<this.animationInterval;i++) {
             yield this.crypted = this.generateCrypted();
         }
         this.decrypted = true;
@@ -72,7 +72,7 @@ class DataProcessor {
         this.chars = this.rows.reduce((res, row) => {
 
             row = row.split("").map((char) => {
-                return new ModChar(char, (Math.random() * 20 | 0));
+                return new ModChar(char, (Math.random()*20|0));
             });
 
             row.unshift(new ModChar("\n"));
@@ -103,6 +103,7 @@ class DataProcessor {
 
 let processInput = (data, selector) => {
     const dataProcessor = new DataProcessor();
+    dataProcessor.getCryptedText(data);
 
     let interval = setInterval(() => {
         const l = dataProcessor.rows.length;
@@ -111,7 +112,7 @@ let processInput = (data, selector) => {
 
         $(selector).text(value);
 
-        if (done) {
+        if(done){
             clearInterval(interval);
             console.log('fin')
         }
