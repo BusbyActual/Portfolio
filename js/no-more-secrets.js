@@ -10,16 +10,16 @@ for ( var i = 32; i <= 999; i++ ) {
 }
 
 class ModChar {
-    constructor(initial, animationInterval){
+    constructor(initial, animationInterval) {
         this.initial = initial;
         this.decrypted = false;
         this.animationInterval = animationInterval;
         this.crypted = this.generateCrypted();
     }
-    generateCrypted(){
+    generateCrypted() {
         return ModChar.doNotModifyChars.includes(this.initial) ? this.initial : maskChars[Math.floor(Math.random()*maskChars.length)]
     }
-    initDecrypt(){
+    initDecrypt() {
         const gen = this.decrypt();
         return new Promise((resolve)=>{
             let speed = 100;
@@ -46,7 +46,7 @@ class ModChar {
         return this.decrypted ? this.initial : this.crypted;
     }
     * decrypt(){
-        for(let i=0;i<this.animationInterval;i++){
+        for (let i=0;i<this.animationInterval;i++) {
             yield this.crypted = this.generateCrypted();
         }
         this.decrypted = true;
@@ -87,16 +87,16 @@ class DataProcessor {
         var pr = this.chars.map((char) => {
             return char.initDecrypt();
         });
-        Promise.all(pr).then(()=>{
+        Promise.all(pr).then(() => {
             this.decrypted = true;
-        })
+        });
     }
-    getSnapshot(){
+    getSnapshot() {
         let value = this.getTextFromCryptedChars(this.chars);
         return {
             done: this.decrypted,
             value
-        }
+        };
     }
 }
 
@@ -105,7 +105,7 @@ let processInput = (data, selector) => {
     const dataProcessor = new DataProcessor();
     console.log(dataProcessor.getCryptedText(data));
 
-    let interval = setInterval(()=>{
+    let interval = setInterval(() => {
         const l = dataProcessor.rows.length;
         let {done, value} = dataProcessor.getSnapshot();
 
