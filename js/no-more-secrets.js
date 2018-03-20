@@ -5,6 +5,11 @@
 (function($) {
 let maskChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()-_=+{}[]:;|\"'<>,.?/".split("");
 
+maskChars = '';
+for ( var i = 32; i <= 999; i++ ) {
+    maskChars += String.fromCharCode( i );
+}
+
 class ModChar {
     constructor(initial, animationInterval){
         this.initial = initial;
@@ -118,6 +123,4 @@ let processInput = (data, selector) => {
 
 let temp = $('.crypto').each(function(){ processInput($(this).text(), this); });
 
-console.log(temp)
-// console.log(processInput(temp, '.crypto'))
 })(jQuery);
