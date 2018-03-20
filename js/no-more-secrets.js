@@ -3,7 +3,6 @@
 */
 
 (function($) {
-let maskChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()-_=+{}[]:;|\"'<>,.?/".split("");
 
 maskChars = '';
 for ( var i = 32; i <= 999; i++ ) {
@@ -54,36 +53,38 @@ class ModChar {
         yield this.initial;
     }
 }
-ModChar.doNotModifyChars = ["\n"," "];
+ModChar.doNotModifyChars = [];
 
 class DataProcessor {
-    constructor(){
+    constructor() {
         this.chars = null;//It supposed to contain all chars
         this.rows = [];//It has all rows with text
         this.decrypted = false;
         this.speed = 0;
     }
-    getTextFromCryptedChars(chars){
-        return [].concat.apply([], chars).reduce((res, char)=>{
+    getTextFromCryptedChars(chars) {
+        return [].concat.apply([], chars).reduce((res, char) => {
             return res.push(char.getValue()), res;
         },[]).join("");
     }
-    getCryptedCharsFromText(text){
+    getCryptedCharsFromText(text) {
         this.rows = text.split("\n");
-        this.chars = this.rows.reduce((res, row)=>{//[new Char, new Char, new Char,new Char, new Char, new Char...]
-            row = row.split("").map((char)=>{
+        this.chars = this.rows.reduce((res, row) => {
+
+            row = row.split("").map((char) => {
                 return new ModChar(char, (Math.random()*20|0));
             });
+
             row.unshift(new ModChar("\n"));
             return [...res, ...row];
         }, []);
         return this.chars;
     }
-    getCryptedText(text){
+    getCryptedText(text) {
         return this.getTextFromCryptedChars(this.getCryptedCharsFromText(text))
     }
-    initDecrypt(){
-        var pr = this.chars.map((char)=>{
+    initDecrypt() {
+        var pr = this.chars.map((char) => {
             return char.initDecrypt();
         });
         Promise.all(pr).then(()=>{
