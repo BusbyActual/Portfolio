@@ -20,14 +20,15 @@ class ModChar {
         return ModChar.doNotModifyChars.includes(this.initial) ? this.initial : maskChars[Math.floor(Math.random()*maskChars.length)]
     }
     initDecrypt() {
+
         const gen = this.decrypt();
-        return new Promise((resolve)=>{
-            let speed = 100;
+        return new Promise( async (resolve)=>{
+            let speed = 45;
 
             let werk = () => {
                 const {done} = gen.next();
 
-                if(done) {
+                if (done) {
                     resolve();
                 }
 
@@ -53,7 +54,7 @@ class ModChar {
         yield this.initial;
     }
 }
-ModChar.doNotModifyChars = [];
+ModChar.doNotModifyChars = [" ", ""];
 
 class DataProcessor {
     constructor() {
@@ -84,7 +85,7 @@ class DataProcessor {
         return this.getTextFromCryptedChars(this.getCryptedCharsFromText(text))
     }
     initDecrypt() {
-        var pr = this.chars.map((char) => {
+        var pr = this.chars.map(async (char) => {
             return char.initDecrypt();
         });
         Promise.all(pr).then(() => {
